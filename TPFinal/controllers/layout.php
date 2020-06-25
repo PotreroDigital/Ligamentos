@@ -1,25 +1,9 @@
 <?php
 
-//Zona sin uso. 
-function UsersFilt()
-{
-    $rol='';
-
-    if ($rol == 'root') {
-        Root();
-    }elseif ($rol == 'admin') {
-        Admin();
-    }elseif ($rol == 'client') {
-        Client();
-    }else {
-        Visitor();
-    }
-}
-
 //Zona de tablas.
 function RootTable()
 {
-    if ($conexion = mysqli_connect("127.0.0.1", "root")) {
+    if ($conexion = mysqli_connect("127.0.0.1", "root","")) {
 
         if ($r = "SELECT * FROM users WHERE root") {
             mysqli_select_db($conexion, "project");
@@ -57,7 +41,7 @@ function RootTable()
 
 function AdminTable()
 {
-    if ($conexion = mysqli_connect("127.0.0.1", "root")) {
+    if ($conexion = mysqli_connect("127.0.0.1", "root","")) {
 
         if ($a = "SELECT * FROM users WHERE admin") {
             mysqli_select_db($conexion, "project");
@@ -95,7 +79,7 @@ function AdminTable()
 
 function ClientTable()
 {
-    if ($conexion = mysqli_connect("127.0.0.1", "root")) {
+    if ($conexion = mysqli_connect("127.0.0.1", "root","")) {
 
         if ($c = "SELECT * FROM users WHERE client") {
             mysqli_select_db($conexion, "project");
@@ -165,7 +149,7 @@ function Register()
         echo "ERROR: Por favor, proporcione su teléfono.<br>";
     }
     
-    if ($conexion = mysqli_connect("127.0.0.1", "root")) {
+    if ($conexion = mysqli_connect("127.0.0.1", "root","")) {
             echo "<p>MySQL le ha dado permiso a PHP para ejecutar consultas con ese usuario.</p>";
 
         if ($q = "SELECT dni FROM users WHERE dni='$dni'") {
@@ -223,7 +207,7 @@ function Login()
         echo "ERROR: Por favor, proporcione su contraseña.<br>";
     }
     
-        if ($conexion = mysqli_connect("127.0.0.1", "root")) {
+        if ($conexion = mysqli_connect("127.0.0.1", "root","")) {
             echo "<p>MySQL le ha dado permiso a PHP para ejecutar consultas con ese usuario.</p>";
         
             if ($q = "SELECT * FROM users WHERE nickname='$nName' and code='$pWord'") {
@@ -354,12 +338,13 @@ function Edit()
         echo "ERROR: Por favor, proporcione su teléfono.<br>";
     }
 
-        if ($conexion2 = mysqli_connect("127.0.0.1", "root")) {
+        if ($conexion = mysqli_connect("127.0.0.1", "root","")) {
             echo "<p>MySQL le ha dado permiso a PHP para ejecutar consultas con ese usuario.</p>";
+            
+            $dni = $_POST["dni"];
 
-            $consulta2 = "UPDATE INTO users (id,dni,nickname,code,name,lastname,email,phone,root,admin,client) 
-            VALUES ('','','$nName2','$pWord2','$fName2','$lName2','$email2','$phone2','','','')";
-            mysqli_select_db($conexion2, "project");
+            $consulta = "UPDATE users SET nick='$nName2', code='$pWord2', name='$fName2', lastname='$lName2', email='$email2', phone='$phone2' WHERE dni='$dni')";
+            mysqli_select_db($conexion, "project");
             echo "<p>Se actualizó correctamente.</p>";
         }else {
             echo"<p>MySQL no reconoce ese usuario y password.</p>";
@@ -370,26 +355,28 @@ function Delete()
 {
     $dni = $_POST["dni"];
 
-    if ($conexion = mysqli_connect("127.0.0.1", "root")) {
+    if ($conexion = mysqli_connect("127.0.0.1", "root","")) {
         echo "<p>MySQL le ha dado permiso a PHP para ejecutar consultas con ese usuario.</p>";
 
-        if ($q = "SELECT * FROM usuarios WHERE name='$dni'") {
-            mysqli_select_db($conexion, "proyecto");
-            $datos = mysqli_query($conexion, $q);
-            $dato = mysqli_fetch_array($datos);
+        if ($d = "SELECT * FROM users WHERE dni='$dni'") {
+            mysqli_select_db($conexion, "project");
+            $datos = mysqli_query($conexion, $d);
+            $dato2 = mysqli_fetch_array($datos);
 
-            if ($dato['code'] == $dni) {
-                echo "<p>Ya está en la base de datos.</p>";
-            }else{
-                $consulta = "DELETE FROM usuarios WHERE dni=$dni";
-                mysqli_select_db($conexion, "proyecto");
-
+            if ($dato2['dni'] == $dni) {
+                mysqli_select_db($conexion, "project");
+                $consulta = "DELETE FROM users WHERE dni='$dni'";
+            
                 if (mysqli_query($conexion, $consulta)) {
-                    echo "<p>Registro agregado.</p>";
+                    echo "<p>Registro eliminado.</p>";
                 }else {
-                    echo "<p>No se agregó...</p>";
-                }   
-            }      
+                    echo "<p>No se borró...</p>";
+                }
+            }else{
+                echo "<p>No existís.</p>";
+            }
+        }else{
+            echo "<p>Registrate maquinola.</p>";
         }
     }else {
         echo"<p>MySQL no reconoce ese usuario y password.</p>";
