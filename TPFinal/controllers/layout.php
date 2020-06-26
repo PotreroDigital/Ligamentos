@@ -9,8 +9,7 @@ function RootTable()
             mysqli_select_db($conexion, "project");
             $datos1 = mysqli_query($conexion, $r);
     
-    
-            if ($root=['root'] != NULL) {
+            while ($f1 = mysqli_fetch_array($datos1)) {
                 $tablaRoots = array("id","dni","nickname","code","name","lastname","email","phone","user");
                 echo '<table class="col-11 table table-sm table-bordered table-striped table-dark text-left m-5">
                         <tr class="bg-dark">
@@ -18,10 +17,8 @@ function RootTable()
                         </tr>
                         <tr class="bg-info">';
                             foreach ($tablaRoots as $raiz) {echo "<td class='text-center'>$raiz</td>";}
-                        '</tr>'; 
-
-                while ($f1 = mysqli_fetch_array($datos1)) {
-                    echo '<tr>
+                        '</tr>
+                        <tr>
                             <td class="text-center">'.$f1["id"].'</td>
                             <td>'.$f1["dni"].'</td>  
                             <td>'.$f1["nickname"].'</td>
@@ -32,9 +29,8 @@ function RootTable()
                             <td>'.$f1["phone"].'</td>  
                             <td class="text-center">root</td>                             
                         </tr>';                 
-                }
-                    '</table>';
             }
+                    '</table>';
         }
     }
 }
@@ -46,9 +42,8 @@ function AdminTable()
         if ($a = "SELECT * FROM users WHERE admin") {
             mysqli_select_db($conexion, "project");
             $datos2 = mysqli_query($conexion, $a);
-    
-    
-            if ($admin=['admin'] != NULL) {
+
+            while ($f2 = mysqli_fetch_array($datos2)) {
                 $tablaAdmins = array("id","dni","nickname","code","name","lastname","email","phone","user");
                 echo '<table class="col-11 table table-sm table-bordered table-striped table-dark text-left m-5">
                         <tr class="bg-dark">
@@ -56,10 +51,8 @@ function AdminTable()
                         </tr>
                         <tr class="bg-info">';
                             foreach ($tablaAdmins as $istrador) {echo "<td class='text-center'>$istrador</td>";}
-                        '</tr>'; 
-
-                while ($f2 = mysqli_fetch_array($datos2)) {
-                    echo '<tr>
+                        '</tr>
+                        <tr>
                             <td class="text-center">'.$f2["id"].'</td>
                             <td>'.$f2["dni"].'</td>  
                             <td>'.$f2["nickname"].'</td>
@@ -70,9 +63,8 @@ function AdminTable()
                             <td>'.$f2["phone"].'</td>  
                             <td class="text-center">admin</td>                             
                         </tr>';                 
-                }
-                    '</table>';
             }
+                    '</table>';
         }
     }
 }
@@ -84,9 +76,8 @@ function ClientTable()
         if ($c = "SELECT * FROM users WHERE client") {
             mysqli_select_db($conexion, "project");
             $datos3 = mysqli_query($conexion, $c);
-    
-    
-            if ($client=['client'] != NULL) {
+      
+            while ($f3 = mysqli_fetch_array($datos3)) {
                 $tablaClients = array("id","dni","nickname","code","name","lastname","email","phone","user");
                 echo '<table class="col-11 table table-sm table-bordered table-striped table-dark text-left m-5">
                         <tr class="bg-dark">
@@ -94,10 +85,8 @@ function ClientTable()
                         </tr>
                         <tr class="bg-info">';
                             foreach ($tablaClients as $clientes) {echo "<td class='text-center'>$clientes</td>";}
-                        '</tr>'; 
-
-                while ($f3 = mysqli_fetch_array($datos3)) {
-                    echo '<tr>
+                        '</tr> 
+                        <tr>
                             <td class="text-center">'.$f3["id"].'</td>
                             <td>'.$f3["dni"].'</td>  
                             <td>'.$f3["nickname"].'</td>
@@ -108,12 +97,12 @@ function ClientTable()
                             <td>'.$f3["phone"].'</td>  
                             <td class="text-center">client</td>                             
                         </tr>';                 
-                }
-                    '</table>';
             }
+                    '</table>';
         }
     }
 }
+
 
 function Visitor()
 {
@@ -315,8 +304,33 @@ function Control()
     }
 }
 
+function Auxit()
+{
+    $dni = $_POST["dni"];
+
+    if ($conexion = mysqli_connect("127.0.0.1", "root","")) {
+        echo "<p>MySQL le ha dado permiso a PHP para ejecutar consultas con ese usuario.</p>";
+
+        if ($e = "SELECT * FROM users WHERE dni='$dni'") {
+            mysqli_select_db($conexion, "project");
+            $mod = mysqli_query($conexion, $e);
+            $dato3 = mysqli_fetch_array($mod);
+        
+            if ($dato3['dni'] == $dni) {
+                echo "<p>Usuario encontrado.</p>";  
+                return $dato3;
+            }else {
+                echo "<p>Mala suerte.</p>";  
+            }
+        }
+    }else {
+        echo "<p> MySQL no conoce ese usuario y password</p>";
+    }
+}
+
 function Edit()
 {
+    $dni2 = $_POST["dni2"];
     $nName2 = $_POST["nick2"];
     $pWord2 = $_POST["code2"];
     $fName2 = $_POST["nombre2"];
@@ -324,7 +338,9 @@ function Edit()
     $email2 = $_POST["email2"];
     $phone2 = $_POST["telefono2"];
 
-    if (empty($nName2)) {
+    if (empty($dni2)) {
+        echo "ERROR: Por favor, proporcione su documento.<br>";
+    }elseif (empty($nName2)) {
         echo "ERROR: Por favor, proporcione su nombre.<br>";
     }elseif (empty($pWord2)) {
         echo "ERROR: Por favor, proporcione su contraseña.<br>";
@@ -340,12 +356,18 @@ function Edit()
 
         if ($conexion = mysqli_connect("127.0.0.1", "root","")) {
             echo "<p>MySQL le ha dado permiso a PHP para ejecutar consultas con ese usuario.</p>";
-            
-            $dni = $_POST["dni"];
 
-            $consulta = "UPDATE users SET nick='$nName2', code='$pWord2', name='$fName2', lastname='$lName2', email='$email2', phone='$phone2' WHERE dni='$dni')";
-            mysqli_select_db($conexion, "project");
-            echo "<p>Se actualizó correctamente.</p>";
+            if ($e = "SELECT * FROM users WHERE dni='$dni2'") {
+                mysqli_select_db($conexion, "project");
+                $moda = mysqli_query($conexion, $e);
+                $dato4 = mysqli_fetch_array($moda);
+            
+                if ($dato4['dni'] == $dni2) {
+                    $consulta = "UPDATE users SET nickname='$nName2', code='$pWord2', name='$fName2', lastname='$lName2', email='$email2', phone='$phone2' WHERE dni=$dni2";
+                    mysqli_query($conexion, $consulta);
+                    echo "<p>Se actualizó correctamente.</p>";
+                }
+            }     
         }else {
             echo"<p>MySQL no reconoce ese usuario y password.</p>";
         }   
@@ -433,22 +455,34 @@ function FormLog()
 
 function FormChange()
 {
+    $bus = Auxit();
+
+    $dni = $bus["dni"];
+    $nName = $bus["nickname"];
+    $pWord = $bus["code"];
+    $fName = $bus["name"];
+    $lName = $bus["lastname"];
+    $email = $bus["email"];
+    $phone = $bus["phone"];
+    
     echo '<div class="col-2 bg-dark text-warning float-left border border-rounded border-primary mt-5"> 
             <div class="container">  
                 <h3 class="mt-4 text-center">Edit</h3>
-                <form action="edit.php" method="post">
+                <form action="edit.php" method="post">     
+                    <p>DNI:<br>
+                    <input class="border rounded-pill bg-teal-light" type="text" name="dni2" placeholder="nickname" value="'.$dni.'" readonly="readonly" size="16"></p>
                     <p>Nickname:<br>
-                    <input class="border rounded-pill" type="text" name="nick2" size="16"></p>
+                    <input class="border rounded-pill" type="text" name="nick2" placeholder="nickname" value="'.$nName.'" size="16"></p>
                     <p>Password:<br>
-                    <input class="border rounded-pill" type="text" name="code2" size="16"></p>          
+                    <input class="border rounded-pill" type="text" name="code2" placeholder="password" value="'.$pWord.'" size="16"></p>          
                     <p>Nombre:<br>
-                    <input class="border rounded-pill" type="text" name="nombre2" size="16"></p>     
+                    <input class="border rounded-pill" type="text" name="nombre2" placeholder="nombre" value="'.$fName.'" size="16"></p>     
                     <p>Apellido:<br>
-                    <input class="border rounded-pill" type="text" name="apellido2" size="16"></p>
+                    <input class="border rounded-pill" type="text" name="apellido2" placeholder="apellido" value="'.$lName.'" size="16"></p>
                     <p>Email:<br>
-                    <input class="border rounded-pill" type="text" name="email2" size="16"></p>
+                    <input class="border rounded-pill" type="text" name="email2" placeholder="email" value="'.$email.'" size="16"></p>
                     <p>Teléfono:<br>
-                    <input class="border rounded-pill" type="text" name="telefono2" size="16"></p>
+                    <input class="border rounded-pill" type="text" name="telefono2" placeholder="teléfono" value="'.$phone.'" size="16"></p>
                     <input class="bg-indigo text-white mt-2" type="submit" value="Enviar">
                 </form>
             </div>
