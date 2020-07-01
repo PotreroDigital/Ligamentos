@@ -9,28 +9,29 @@ function RootTable()
             mysqli_select_db($conexion, "project");
             $datos1 = mysqli_query($conexion, $r);
     
+            $tablaRoots = array("id","dni","nickname","code","name","lastname","email","phone","user");
+             echo '<table class="col-11 table table-sm table-bordered table-striped table-dark text-left m-5">
+                    <tr class="bg-dark">
+                        <th colspan=11 class="text-center text-primary">Root</th>
+                    </tr>
+                    <tr class="bg-info">';
+                        foreach ($tablaRoots as $raiz) {echo "<td class='text-center'>$raiz</td>";}
+                    '</tr>'; 
+
             while ($f1 = mysqli_fetch_array($datos1)) {
-                $tablaRoots = array("id","dni","nickname","code","name","lastname","email","phone","user");
-                echo '<table class="col-11 table table-sm table-bordered table-striped table-dark text-left m-5">
-                        <tr class="bg-dark">
-                            <th colspan=11 class="text-center text-primary">Root</th>
-                        </tr>
-                        <tr class="bg-info">';
-                            foreach ($tablaRoots as $raiz) {echo "<td class='text-center'>$raiz</td>";}
-                        '</tr>
-                        <tr>
-                            <td class="text-center">'.$f1["id"].'</td>
-                            <td>'.$f1["dni"].'</td>  
-                            <td>'.$f1["nickname"].'</td>
-                            <td>'.$f1["code"].'</td>
-                            <td>'.$f1["name"].'</td>
-                            <td>'.$f1["lastname"].'</td>
-                            <td>'.$f1["email"].'</td> 
-                            <td>'.$f1["phone"].'</td>  
-                            <td class="text-center">root</td>                             
-                        </tr>';                 
+                echo '<tr>
+                        <td class="text-center">'.$f1["id"].'</td>
+                        <td>'.$f1["dni"].'</td>  
+                        <td>'.$f1["nickname"].'</td>
+                        <td>'.$f1["code"].'</td>
+                        <td>'.$f1["name"].'</td>
+                        <td>'.$f1["lastname"].'</td>
+                        <td>'.$f1["email"].'</td> 
+                        <td>'.$f1["phone"].'</td>  
+                        <td class="text-center">root</td>                             
+                    </tr>';                 
             }
-                    '</table>';
+                '</table>';
         }
     }
 }
@@ -43,28 +44,29 @@ function AdminTable()
             mysqli_select_db($conexion, "project");
             $datos2 = mysqli_query($conexion, $a);
 
+            $tablaAdmins = array("id","dni","nickname","code","name","lastname","email","phone","user");
+            echo '<table class="col-11 table table-sm table-bordered table-striped table-dark text-left m-5">
+                    <tr class="bg-dark">
+                        <th colspan=11 class="text-center text-primary">Admin</th>
+                    </tr>
+                    <tr class="bg-info">';
+                        foreach ($tablaAdmins as $istrador) {echo "<td class='text-center'>$istrador</td>";}
+                    '</tr>'; 
+
             while ($f2 = mysqli_fetch_array($datos2)) {
-                $tablaAdmins = array("id","dni","nickname","code","name","lastname","email","phone","user");
-                echo '<table class="col-11 table table-sm table-bordered table-striped table-dark text-left m-5">
-                        <tr class="bg-dark">
-                            <th colspan=11 class="text-center text-primary">Admin</th>
-                        </tr>
-                        <tr class="bg-info">';
-                            foreach ($tablaAdmins as $istrador) {echo "<td class='text-center'>$istrador</td>";}
-                        '</tr>
-                        <tr>
-                            <td class="text-center">'.$f2["id"].'</td>
-                            <td>'.$f2["dni"].'</td>  
-                            <td>'.$f2["nickname"].'</td>
-                            <td>'.$f2["code"].'</td>
-                            <td>'.$f2["name"].'</td>
-                            <td>'.$f2["lastname"].'</td>
-                            <td>'.$f2["email"].'</td> 
-                            <td>'.$f2["phone"].'</td>  
-                            <td class="text-center">admin</td>                             
-                        </tr>';                 
+                echo '<tr>
+                        <td class="text-center">'.$f2["id"].'</td>
+                        <td>'.$f2["dni"].'</td>  
+                        <td>'.$f2["nickname"].'</td>
+                        <td>'.$f2["code"].'</td>
+                        <td>'.$f2["name"].'</td>
+                        <td>'.$f2["lastname"].'</td>
+                        <td>'.$f2["email"].'</td> 
+                        <td>'.$f2["phone"].'</td>  
+                        <td class="text-center">admin</td>                             
+                    </tr>';                 
             }
-                    '</table>';
+                '</table>';
         }
     }
 }
@@ -77,28 +79,29 @@ function ClientTable()
             mysqli_select_db($conexion, "project");
             $datos3 = mysqli_query($conexion, $c);
       
+            $tablaClients = array("id","dni","nickname","code","name","lastname","email","phone","user");
+             echo '<table class="col-11 table table-sm table-bordered table-striped table-dark text-left m-5">
+                    <tr class="bg-dark">
+                        <th colspan=11 class="text-center text-primary">Client</th>
+                    </tr>
+                    <tr class="bg-info">';
+                        foreach ($tablaClients as $clientes) {echo "<td class='text-center'>$clientes</td>";}
+                    '</tr>'; 
+
             while ($f3 = mysqli_fetch_array($datos3)) {
-                $tablaClients = array("id","dni","nickname","code","name","lastname","email","phone","user");
-                echo '<table class="col-11 table table-sm table-bordered table-striped table-dark text-left m-5">
-                        <tr class="bg-dark">
-                            <th colspan=11 class="text-center text-primary">Client</th>
-                        </tr>
-                        <tr class="bg-info">';
-                            foreach ($tablaClients as $clientes) {echo "<td class='text-center'>$clientes</td>";}
-                        '</tr> 
-                        <tr>
-                            <td class="text-center">'.$f3["id"].'</td>
-                            <td>'.$f3["dni"].'</td>  
-                            <td>'.$f3["nickname"].'</td>
-                            <td>'.$f3["code"].'</td>
-                            <td>'.$f3["name"].'</td>
-                            <td>'.$f3["lastname"].'</td>
-                            <td>'.$f3["email"].'</td> 
-                            <td>'.$f3["phone"].'</td>  
-                            <td class="text-center">client</td>                             
-                        </tr>';                 
+                echo '<tr>
+                        <td class="text-center">'.$f3["id"].'</td>
+                        <td>'.$f3["dni"].'</td>  
+                        <td>'.$f3["nickname"].'</td>
+                        <td>'.$f3["code"].'</td>
+                        <td>'.$f3["name"].'</td>
+                        <td>'.$f3["lastname"].'</td>
+                        <td>'.$f3["email"].'</td> 
+                        <td>'.$f3["phone"].'</td>  
+                        <td class="text-center">client</td>                             
+                    </tr>';                 
             }
-                    '</table>';
+                '</table>';
         }
     }
 }
@@ -147,6 +150,7 @@ function Register()
 
             if (mysqli_num_rows($datos) > 0) {
                 echo "<p>Ya está en la base de datos.</p>";
+                echo '<a href="user.php" class="badge badge-pill badge-success p-2">Volver</a>';
             }else{
 
                 switch ($value) {
@@ -177,7 +181,8 @@ function Register()
                     echo "<p>Registro agregado.</p>";
                 }else {
                     echo "<p>No se agregó...</p>";
-                }   
+                } 
+            echo '<a href="user.php" class="badge badge-pill badge-success p-2">Volver</a>';  
             }      
         }
     }else {
@@ -210,57 +215,122 @@ function Login()
                     if ($dato['root'] == 1) {
                         session_start();
                         $_SESSION["root"] = $dato;
-                        echo "<p>¡Hola ".$dato['nickname'].", sos root!</p>";
-                        echo '<form action="control.php" method="post">
-                                <select name="crud">
-                                    <option value="1">Crear</option>
-                                    <option value="3">Editar</option>
-                                    <option value="5">Borrar</option>
-                                </select>
-                                <input type="submit" value="Enviar">
-                            </form>';
-                        echo "<a href='logout.php' class='badge badge-pill badge-success p-2'>Cerrar sesión.</a>"; 
-                        RootTable();
-                        AdminTable();
-                        ClientTable();
+                        //echo "<p>¡Hola ".$dato['nickname'].", sos root!</p>";
+                        header("Location: user.php");
 
                     }elseif ($dato['admin'] == 2) {
                         session_start();
                         $_SESSION["admin"] = $dato;
-                        echo "<p>¡Hola ".$dato['nickname'].", sos admin!</p>";
-                        echo '<form action="control.php" method="post">
-                                <select name="crud">
-                                    <option value="2">Crear</option>
-                                    <option value="4">Editar</option>
-                                    <option value="6">Borrar</option>
-                                </select>
-                                <input type="submit" value="Enviar">
-                            </form>';
-                        echo "<a href='logout.php' class='badge badge-pill badge-success p-2'>Cerrar sesión.</a>"; 
-                        AdminTable();
-                        ClientTable();
+                        //echo "<p>¡Hola ".$dato['nickname'].", sos admin!</p>";
+                        header("Location: user.php");
 
                     }elseif ($dato['client'] == 3) {
                         session_start();
                         $_SESSION["client"] = $dato;
-                        echo "<p>¡Hola ".$dato['nickname'].", sos client!</p>";
-                        echo "<p>¡No podés editar nah!</p>";
-                        echo "<a href='logout.php' class='badge badge-pill badge-success p-2'>Cerrar sesión.</a>"; 
-                        ClientTable();
+                        //echo "<p>¡Hola ".$dato['nickname'].", sos client!</p>";
+                        echo '<strong>Client</strong><br>
+                        <a href="user.php" class="badge badge-pill badge-grape p-2">Crear tabla.</a>
+                        <a href="logout.php" class="badge badge-pill badge-success p-2">Cerrar sesión.</a>';
 
                     }else {
                         echo "<p>Registrate fierita.</p>";
                         Visitor();
                     }
                 }else {
-                    echo "¡Rajá de acá!";
+                    echo "Puede registrarse";
+                    FormAutoReg();
                 }
             }else {
-                echo"Registrate chamigo";
+                echo "Registrate chamigo";
             }     
         }else {
             echo"<p>MySQL no reconoce ese usuario y password.</p>";
         } 
+}
+
+function User() 
+{
+    session_start();
+
+    if (empty($_SESSION["admin"]) && empty($_SESSION["client"]) && $_SESSION["root"]) {
+        echo '<strong>Root</strong><br>
+                <form action="control.php" method="post">
+                    <select name="crud">
+                        <option value="1">Crear</option>
+                        <option value="3">Editar</option>
+                        <option value="5">Borrar</option>
+                    </select>
+                    <input type="submit" value="Enviar">
+                </form>
+            <a href="lista.php" class="badge badge-pill badge-orange p-2" value="1">Ver tablas.</a>
+            <a href="logout.php" class="badge badge-pill badge-success p-2">Cerrar sesión.</a>';
+
+    }elseif (empty($_SESSION["root"]) && empty($_SESSION["client"]) && $_SESSION["admin"]) {
+        echo '<strong>Admin</strong><br>
+                <form action="control.php" method="post">
+                    <select name="crud">
+                        <option value="2">Crear</option>
+                        <option value="4">Editar</option>
+                        <option value="6">Borrar</option>
+                    </select>
+                    <input type="submit" value="Enviar">
+                </form>
+            <a href="lista.php" class="badge badge-pill badge-orange p-2">Ver tablas.</a>
+            <a href="logout.php" class="badge badge-pill badge-success p-2">Cerrar sesión.</a>'; 
+
+    }elseif (empty($_SESSION["root"]) && empty($_SESSION["admin"]) && $_SESSION["client"]) {
+        FormCamp();
+    }else {
+        header("Location: index.php");
+        exit();
+    }
+}
+
+function Lista()
+{
+    session_start();
+
+    if (empty($_SESSION["admin"]) && empty($_SESSION["client"]) && $_SESSION["root"]) {
+        
+        if ($conexion = mysqli_connect("127.0.0.1", "root","")) {
+
+            if ($l = "SELECT * FROM users WHERE root") {
+                mysqli_select_db($conexion, "project");
+                $d1 = mysqli_query($conexion, $l);
+                $show1 = mysqli_fetch_array($d1);
+
+                echo '<a href="user.php" class="badge badge-pill badge-warning text-white mt-5 p-2">Volver.</a>'; 
+
+                if ($show1['root'] == 1) {               
+                    RootTable(); 
+                    AdminTable();           
+                }
+            }
+        }
+    }elseif (empty($_SESSION["root"]) && empty($_SESSION["client"]) && $_SESSION["admin"]) {
+        
+        if ($conexion = mysqli_connect("127.0.0.1", "root","")) {
+
+            if ($m = "SELECT * FROM users WHERE admin") {
+                mysqli_select_db($conexion, "project");
+                $d2 = mysqli_query($conexion, $m);
+                $show2 = mysqli_fetch_array($d2);
+                
+                echo '<a href="user.php" class="badge badge-pill badge-warning text-white mt-5 p-2">Volver.</a>'; 
+
+                if ($show2['admin'] == 2) {
+                    AdminTable();
+                    ClientTable();    
+                }
+            }
+        }
+    }elseif (empty($_SESSION["root"]) && empty($_SESSION["admin"]) && $_SESSION["client"]) {
+        echo "<strong>Client</strong><br>";
+        FormCamp();
+    }else {
+        header("Location: index.php");
+        exit();
+    }
 }
 
 function Control()
@@ -298,6 +368,9 @@ function Control()
                 break;
             }
 
+    }elseif (empty($_SESSION["root"]) && empty($_SESSION["admin"]) && $_SESSION["client"]) {
+        echo "<strong>Client</strong><br>";
+        FormCamp();
     }else {
         header("Location: index.php");
         exit();
@@ -367,6 +440,7 @@ function Edit()
                     mysqli_query($conexion, $consulta);
                     echo "<p>Se actualizó correctamente.</p>";
                 }
+                echo '<a href="user.php" class="badge badge-pill badge-warning text-white p-2">Volver</a>';
             }     
         }else {
             echo"<p>MySQL no reconoce ese usuario y password.</p>";
@@ -391,11 +465,13 @@ function Delete()
             
                 if (mysqli_query($conexion, $consulta)) {
                     echo "<p>Registro eliminado.</p>";
+                    echo '<a href="user.php" class="badge badge-pill badge-warning text-white mt-5 p-2">Volver.</a>'; 
                 }else {
                     echo "<p>No se borró...</p>";
                 }
             }else{
                 echo "<p>No existís.</p>";
+                header("Location: control.php");
             }
         }else{
             echo "<p>Registrate maquinola.</p>";
@@ -405,7 +481,86 @@ function Delete()
     }
 }
 
+function Table()
+{
+    $value = $_POST['T1'];
+
+    if (ctype_digit($value) && $value>=0 or $value<0) {
+        echo '<div class="col-2 bg-gray-dark text-white float-left border border-rounded border-primary mt-3"> 
+                <div class="container">
+                    <form action="new.php" method="post">
+                        <input class="bg-primary text-white mt-2" type="submit" value="Enviar">
+                        <p><input class="bg-teal-light text-center" type="hidden" name="T2" value="'.$value.'"></p>
+                        <p>Campos</p>';  
+                        for ($i=0; $i<$value; $i++) { 
+                            echo '<p><input class="border rounded-pill text-center" type="text" name="'.$i.'" size="16"></p>';               
+                        }
+                    '</form>
+                </div>
+            </div>';
+    }else {
+        echo '<h6 class="m-2 text-danger">"'.$value.'" no es un dato válido.</h6>';
+        FormCamp();
+    }
+}
+
+function NewTable()
+{   
+    $value = $_POST['T2'];
+
+    $a = 0;
+    
+    echo '<table class="col-11 table table-sm table-bordered table-striped bg-info text-white text-center m-5">
+            <tr>';
+            while ($a < $value) {
+                $valor[$a]= $_POST[$a];
+                    echo '<td>'.$valor[$a].'</td>';                           
+                $a++;
+            }                          
+            '</tr>
+        </table>';
+     
+
+    if ($conexion = mysqli_connect("127.0.0.1", "root","")) {
+        echo "<p>MySQL le ha dado permiso a PHP para ejecutar consultas con ese usuario.</p>";
+        
+        mysqli_select_db($conexion, "project");
+        $datos = mysqli_query($conexion, $q);
+    
+    }else {
+        echo"<p>MySQL no reconoce ese usuario y password.</p>";
+    }
+}
+
 //Zona de formularios.
+function FormAutoReg()
+{
+    echo '<div class="col-2 d-flex flex-wrap bg-dark text-teal float-left border border-rounded border-primary mt-5"> 
+            <div class="container">  
+                <h3 class="mt-4 text-center">Register</h3>     
+                <form action="register.php" method="post">
+                    <p class="mt-4">DNI:<br>
+                    <input class="border rounded-pill" type="text" name="dni" size="16"></p>
+                    <p>Nickname:<br>
+                    <input class="border rounded-pill" type="text" name="nick" size="16"></p>
+                    <p>Password:<br>
+                    <input class="border rounded-pill" type="text" name="code" size="16"></p>          
+                    <p>Nombre:<br>
+                    <input class="border rounded-pill" type="text" name="nombre" size="16"></p>     
+                    <p>Apellido:<br>
+                    <input class="border rounded-pill" type="text" name="apellido" size="16"></p>
+                    <p>Email:<br>
+                    <input class="border rounded-pill" type="text" name="email" size="16"></p>
+                    <p>Teléfono:<br>
+                    <input class="border rounded-pill" type="text" name="telefono" size="16"></p>
+                    <input type="hidden" name="filter" value="3">
+                    <input class="bg-indigo text-white mt-2" type="submit" value="Enviar">';                     
+                '</form>
+            </div>
+        </div>';
+    return;
+}
+
 function FormReg()
 {
     $option = $_POST['crud'];
@@ -536,6 +691,25 @@ function AdminOption()
         </select>'; 
 }
 
+function FormCamp()
+{
+    echo '<div class="col-2 bg-grape-dark text-white float-left border border-rounded border-primary mt-3"> 
+            <div class="container">
+                <h3 class="m-4 text-center">Crear tabla</h3>
+                <p>Elija el número de campos.</p>
+                <form action="deposit.php" method="post">      
+                    <p>Cantidad: <input type="text" name="T1" size="1"></p>          
+                    <input type="submit" value="Enviar">
+                </form>
+            </div>
+        </div>';
+}
+
+function FormTable()
+{
+
+}
+
 //Partes de la página. 
 function Head()
 {
@@ -546,7 +720,7 @@ function Head()
             <link rel="stylesheet" href="https://bootstrap-colors-extended.herokuapp.com/bootstrap-colors.css" />
             <title>Document</title>
         </head>';
-    }
+}
 
 function ComHeader()
 {
@@ -562,7 +736,7 @@ function ComHeader()
                 <a href="https://info@tgif.net">info@tgif.net</a>
             </div>
         </header>';
-    }
+}
 
 function Nav()
 {
