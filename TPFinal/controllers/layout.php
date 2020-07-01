@@ -182,7 +182,7 @@ function Register()
                 }else {
                     echo "<p>No se agregó...</p>";
                 } 
-            echo '<a href="user.php" class="badge badge-pill badge-success p-2">Volver</a>';  
+            echo '<a href="user.php" class="badge badge-pill badge-warning text-white p-2">Volver</a>';  
             }      
         }
     }else {
@@ -228,7 +228,7 @@ function Login()
                         session_start();
                         $_SESSION["client"] = $dato;
                         //echo "<p>¡Hola ".$dato['nickname'].", sos client!</p>";
-                        echo '<strong>Client</strong><br>
+                        echo '<h4 class="m-5">Client</h4><br>
                         <a href="user.php" class="badge badge-pill badge-grape p-2">Crear tabla.</a>
                         <a href="logout.php" class="badge badge-pill badge-success p-2">Cerrar sesión.</a>';
 
@@ -253,27 +253,27 @@ function User()
     session_start();
 
     if (empty($_SESSION["admin"]) && empty($_SESSION["client"]) && $_SESSION["root"]) {
-        echo '<strong>Root</strong><br>
+        echo '<h4 class="m-5">Root</h4><br>
                 <form action="control.php" method="post">
                     <select name="crud">
                         <option value="1">Crear</option>
                         <option value="3">Editar</option>
                         <option value="5">Borrar</option>
                     </select>
-                    <input type="submit" value="Enviar">
+                    <input class="bg-primary text-white border rounded-pill" type="submit" value="Enviar">
                 </form>
             <a href="lista.php" class="badge badge-pill badge-orange p-2" value="1">Ver tablas.</a>
             <a href="logout.php" class="badge badge-pill badge-success p-2">Cerrar sesión.</a>';
 
     }elseif (empty($_SESSION["root"]) && empty($_SESSION["client"]) && $_SESSION["admin"]) {
-        echo '<strong>Admin</strong><br>
+        echo '<h4 class="m-5">Admin</h4><br>
                 <form action="control.php" method="post">
                     <select name="crud">
                         <option value="2">Crear</option>
                         <option value="4">Editar</option>
                         <option value="6">Borrar</option>
                     </select>
-                    <input type="submit" value="Enviar">
+                    <input class="bg-primary text-white border rounded-pill" type="submit" value="Enviar">
                 </form>
             <a href="lista.php" class="badge badge-pill badge-orange p-2">Ver tablas.</a>
             <a href="logout.php" class="badge badge-pill badge-success p-2">Cerrar sesión.</a>'; 
@@ -509,19 +509,21 @@ function NewTable()
     $value = $_POST['T2'];
 
     $a = 0;
-    
-    echo '<table class="col-11 table table-sm table-bordered table-striped bg-info text-white text-center m-5">
-            <tr>';
-            while ($a < $value) {
-                $valor[$a]= $_POST[$a];
-                    echo '<td>'.$valor[$a].'</td>';                           
-                $a++;
-            }                          
-            '</tr>
-        </table>';
-     
+    $clientTable = array("Name","Type","Length/Values","Default","Collation","Attributes","Null","A_I","Comments");
 
-    if ($conexion = mysqli_connect("127.0.0.1", "root","")) {
+    echo '<table class="col-'.$value.' table table-sm table-bordered table-striped bg-info text-white text-center m-5">';
+
+            while ($a < $value) {
+                $valor[$a]= $_POST[$a];          
+                echo '<tr>
+                        <td>'.$valor[$a].'</td>';
+                        FormTable();
+                    '</tr>';                                                         
+                $a++;
+            } 
+        '</table>';           
+
+    /* if ($conexion = mysqli_connect("127.0.0.1", "root","")) {
         echo "<p>MySQL le ha dado permiso a PHP para ejecutar consultas con ese usuario.</p>";
         
         mysqli_select_db($conexion, "project");
@@ -529,7 +531,7 @@ function NewTable()
     
     }else {
         echo"<p>MySQL no reconoce ese usuario y password.</p>";
-    }
+    } */
 }
 
 //Zona de formularios.
@@ -691,6 +693,11 @@ function AdminOption()
         </select>'; 
 }
 
+function ClientOption()
+{
+    
+}
+
 function FormCamp()
 {
     echo '<div class="col-2 bg-grape-dark text-white float-left border border-rounded border-primary mt-3"> 
@@ -707,7 +714,25 @@ function FormCamp()
 
 function FormTable()
 {
-
+    echo '<td>
+            <select>
+                <option value="1">INT</option>
+                <option value="2">VARCHAR</option>
+                <option value="3">TEXT</option>
+                <option value="4">DATE</option>
+            </select>
+        </td>
+        <td>
+            <input></input>
+        </td>
+        <td>
+            <select>
+                <option value="1">None</option>
+                <option value="2">As defined:</option>
+                <option value="3">NULL</option>
+                <option value="4">CURRENT_TIMESTAMP</option>
+            </select>
+        </td>';
 }
 
 //Partes de la página. 
@@ -725,15 +750,14 @@ function Head()
 function ComHeader()
 {
     echo '<header class="d-flex flex-wrap text-center">
-            <div class="col-2 bg-danger text-white">
-                <img src="images/logo.png" alt="logo" width="50">
-                <a>TGIF</a>
+            <div class="col-2 container bg-success text-white pt-3">           
+                <h4>Potrero Digital</h4>
             </div>
-            <div class="col-8 container bg-primary text-white">
-                <h1>Poneme nombre!!!</h1>
+            <div class="col-8 container bg-navy-dark text-teal">
+                <h1>Conexion</h1>
             </div>
-            <div class="col-2 container bg-orange pt-3">
-                <a href="https://info@tgif.net">info@tgif.net</a>
+            <div class="col-2 container bg-info text-white pt-3">
+                <a class="text-pink-dark" href="https://github.com/PotreroDigital/Ligamentos">Repositorio</a>
             </div>
         </header>';
 }
@@ -741,8 +765,9 @@ function ComHeader()
 function Nav()
 {
     echo '<nav>
-            <div class="col-10 container navbar navbar-expand-lg bg-navy-dark text-white border border-rounded border-primary mt-5">
-                <a class="col-1 navbar-brand text-center text-white bg-navy border border-maroon-light" href="index.php">Home</a>
+            <div class="col-2 container navbar navbar-expand-lg bg-navy-dark text-white border border-rounded border-primary mt-5">
+                <a class="col-12 navbar-brand text-center text-white bg-navy border border-maroon-light" href="index.php">Home</a>
+                <!--
                 <div class="col-2"></div>
                 <div class="col-2 collapse navbar-collapse">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Congress 113</a>
@@ -765,6 +790,7 @@ function Nav()
                         <a class="dropdown-item" href="house_party-attendance.html">House</a>
                     </div>
                 </div>
+                -->
             </div>
         </nav>';
 }
