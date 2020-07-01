@@ -255,7 +255,7 @@ function User()
     if (empty($_SESSION["admin"]) && empty($_SESSION["client"]) && $_SESSION["root"]) {
         echo '<h4 class="m-5">Root</h4><br>
                 <form action="control.php" method="post">
-                    <select name="crud">
+                    <select class="bg-teal" name="crud">
                         <option value="1">Crear</option>
                         <option value="3">Editar</option>
                         <option value="5">Borrar</option>
@@ -268,7 +268,7 @@ function User()
     }elseif (empty($_SESSION["root"]) && empty($_SESSION["client"]) && $_SESSION["admin"]) {
         echo '<h4 class="m-5">Admin</h4><br>
                 <form action="control.php" method="post">
-                    <select name="crud">
+                    <select class="bg-teal" name="crud">
                         <option value="2">Crear</option>
                         <option value="4">Editar</option>
                         <option value="6">Borrar</option>
@@ -393,8 +393,10 @@ function Auxit()
                 echo "<p>Usuario encontrado.</p>";  
                 return $dato3;
             }else {
-                echo "<p>Mala suerte.</p>";  
+                header("Location: user.php");
             }
+        }else {
+            header("Location: user.php");
         }
     }else {
         echo "<p> MySQL no conoce ese usuario y password</p>";
@@ -439,6 +441,9 @@ function Edit()
                     $consulta = "UPDATE users SET nickname='$nName2', code='$pWord2', name='$fName2', lastname='$lName2', email='$email2', phone='$phone2' WHERE dni=$dni2";
                     mysqli_query($conexion, $consulta);
                     echo "<p>Se actualizó correctamente.</p>";
+                }else{
+                    echo "<p>No existís.</p>";
+                    header("Location: user.php");
                 }
                 echo '<a href="user.php" class="badge badge-pill badge-warning text-white p-2">Volver</a>';
             }     
@@ -471,7 +476,7 @@ function Delete()
                 }
             }else{
                 echo "<p>No existís.</p>";
-                header("Location: control.php");
+                header("Location: user.php");
             }
         }else{
             echo "<p>Registrate maquinola.</p>";
@@ -687,7 +692,7 @@ function RootOption()
 
 function AdminOption()
 {
-    echo '<select name="filter">
+    echo '<select class="bg-orange-light" name="filter">
             <option value="2">admin</option>
             <option value="3">client</option>
         </select>'; 
@@ -750,8 +755,8 @@ function Head()
 function ComHeader()
 {
     echo '<header class="d-flex flex-wrap text-center">
-            <div class="col-2 container bg-success text-white pt-3">           
-                <h4>Potrero Digital</h4>
+            <div class="col-2 container bg-success text-white pt-3">                    
+                <h4><a class="text-white" href="https://potrerodigital.org/">Potrero Digital</a></h4>
             </div>
             <div class="col-8 container bg-navy-dark text-teal">
                 <h1>Conexion</h1>
